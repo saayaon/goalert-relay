@@ -8,18 +8,14 @@ const NOTIFY_EVENTS_URL =
 
 app.post("/goalert", async (req, res) => {
   try {
-    // 🔑 1️⃣ GoAlert verification handling
     if (req.body?.verification_code) {
       const code = req.body.verification_code;
 
-      // ✅ PRINT the verification code
       console.log("GoAlert verification code received:", code);
 
-      // ✅ ECHO it back (plain text, exactly)
       return res.status(200).send(code);
     }
 
-    // 🔔 2️⃣ Normal alert flow → notify.events
     const form = new FormData();
     form.append("title", "Attention!");
     form.append("text", "Something just happened!");
