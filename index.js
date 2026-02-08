@@ -3,23 +3,21 @@ import express from "express";
 const app = express();
 app.use(express.json({ strict: false }));
 
-const NOTIFY_EVENTS_URL =
-  "https://notify.events/api/v1/channel/source/nuui6bbgxpzhrosxstxjlsananhtauzn/execute";
+const NOTIFY_EVENTS_URL = process.env.NOTIFY_EVENTS_URL;
 
 app.post("/goalert", async (req, res) => {
   try {
     console.log("GoAlert request received:", req.body);
-    if (req.body?.verification_code) {
-      const code = req.body.verification_code;
+    if (req.body?.code) {
+      const code = req.body.code;
 
       console.log("GoAlert verification code received:", code);
-
       return res.status(200).send(code);
     }
 
     const form = new FormData();
-    form.append("title", "Attention!");
-    form.append("text", "Something just happened!");
+    form.append("title", "Alert");
+    form.append("text", "Prod Alert");
     form.append("priority", "highest");
     form.append("level", "error");
 
@@ -37,5 +35,5 @@ app.post("/goalert", async (req, res) => {
 
 app.listen(3000, () => {
   console.log("GoAlert relay running on port 3000");
-  console.log("Hulla");
+  console.log("NOTIFY_EVENTS_URL:", NOTIFY_EVENTS_URL);
 });
