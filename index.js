@@ -8,6 +8,7 @@ const NOTIFY_EVENTS_URL =
 
 app.post("/goalert", async (req, res) => {
   try {
+    console.log("GoAlert request received:", req.body);
     if (req.body?.verification_code) {
       const code = req.body.verification_code;
 
@@ -36,4 +37,5 @@ app.post("/goalert", async (req, res) => {
 
 app.listen(3000, () => {
   console.log("GoAlert relay running on port 3000");
+  console.log("Hulla");
 });
